@@ -1,0 +1,26 @@
+name: React Js Unit Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [21.x]
+    steps:
+      - name: Checkout github action
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      
+      - name: Setup node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install js packages
+        run: npm install build --if-present
+
+      - name: Run Unit Test
+        run: npm test
